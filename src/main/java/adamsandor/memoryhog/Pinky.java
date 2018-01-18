@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MemoryHog {
+public class Pinky {
 
     private List<byte[]> data = Collections.synchronizedList(new LinkedList<>());
 
@@ -19,7 +19,7 @@ public class MemoryHog {
 
     private Logger logger;
 
-    public MemoryHog(String name, int consumeMb, int releaseAfterSec, int consumeRate) {
+    public Pinky(String name, int consumeMb, int releaseAfterSec, int consumeRate) {
         this.consumeMb = consumeMb;
         this.releaseAfterSec = releaseAfterSec;
         this.consumeRate = consumeRate;

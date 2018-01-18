@@ -20,27 +20,25 @@ public class MemoryHogApplication implements CommandLineRunner {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    private MemoryHog pinky = new MemoryHog("pinky", 100, 60, 5);
-    private MemoryHog bacon = new MemoryHog("bacon", 100, 0, 5);
-
     @Override
     public void run(String... args) throws Exception {
-        pinky = new MemoryHog("pinky",
-                env.getProperty("PINKY_CONSUME_MB", Integer.class, 0),
-                env.getProperty("PINKY_RELEASE_AFTER_SEC", Integer.class, 0),
-                env.getProperty("PINKY_CONSUME_RATE", Integer.class, 5));
-        bacon = new MemoryHog("bacon",
-                env.getProperty("BACON_CONSUME_MB", Integer.class, 0),
-                env.getProperty("BACON_RELEASE_AFTER_SEC", Integer.class, 0),
-                env.getProperty("BACON_CONSUME_RATE", Integer.class, 5));
+        if (env.getProperty("FEED_PINKY", Boolean.class, false)) {
+            Pinky pinky = new Pinky("pinky",
+                    env.getRequiredProperty("PINKY_CONSUME_MB", Integer.class),
+                    env.getRequiredProperty("PINKY_RELEASE_AFTER_SEC", Integer.class),
+                    env.getProperty("PINKY_CONSUME_RATE", Integer.class, 5));
 
-        new Thread(() -> {
-            pinky.feed();
-        }).start();
+            new Thread(pinky::feed).start();
+        }
 
-        new Thread(() -> {
-            bacon.feed();
-        }).start();
+        if (env.getProperty("FEED_BACON", Boolean.class, false)) {
+            Bacon bacon = new Bacon("bacon",
+                    env.getRequiredProperty("BACON_CONSUME_UNTIL_MINUTES", Integer.class),
+                    env.getRequiredProperty("BACON_CONSUME_RATE_MB_PER_SECOND", Integer.class));
+
+            new Thread(bacon::feed).start();
+        }
+
 
         new Thread(() -> {
             while (true) {
