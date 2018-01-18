@@ -8,11 +8,11 @@ spec:
     image: adamsandor83/memoryhog
     env:
       - name: PINKY_CONSUME_MB
-        value: 300
+        value: "300"
       - name: PINKY_RELEASE_AFTER_SEC
-        value: 30
+        value: "30"
       - name: PINKY_CONSUME_RATE
-        value: 5
+        value: "5"
     resources:
         limits:
             memory: 400Mi
