@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Instant;
+import java.util.WeakHashMap;
 
 public class Bacon {
 
@@ -12,6 +13,8 @@ public class Bacon {
     private int consumeRateMbPerSec;
 
     private Logger logger;
+
+    private WeakHashMap<Instant, byte[]> dataStore = new WeakHashMap<>();
 
     public Bacon(String name, int consumeUntilMinutes, int consumeRateMbPerSec) {
         this.consumeUntilMinutes = consumeUntilMinutes;
@@ -27,8 +30,8 @@ public class Bacon {
 
             while (t1.isAfter(Instant.now())) {
                 byte[] b = new byte[1024 * 1024 * consumeRateMbPerSec];
-
-                Thread.sleep(1000 );
+                dataStore.put(Instant.now(), b);
+                Thread.sleep(1000);
             }
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
