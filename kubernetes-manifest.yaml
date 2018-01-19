@@ -1,27 +1,35 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: memoryhog-high
+  name: memoryhog
 spec:
   containers:
   - name: memoryhog
-    image: adamsandor83/memoryhog
+    image: adamsandor83/memoryhog:v2
     env:
+      - name: FEED_BACON
+        value: "true"
+      - name: BACON_CONSUME_UNTIL_MINUTES
+        value: "60"
+      - name: BACON_CONSUME_RATE_MB_PER_SECOND
+        value: "100"
+      - name: FEED_PINKY
+        value: "true"
       - name: PINKY_CONSUME_MB
-        value: "700"
+        value: "1400"
       - name: PINKY_RELEASE_AFTER_SEC
-        value: "20"
+        value: "300"
       - name: PINKY_CONSUME_RATE
-        value: "5"
+        value: "1"
       - name: JMX_HOSTNAME
         valueFrom:
           fieldRef:
             fieldPath: status.podIP
     resources:
         limits:
-            memory: 1000Mi
+            memory: 1700Mi
         requests:
-            memory: 1000Mi
+            memory: 500Mi
     ports:
       - containerPort: 9999
         name: jmx
