@@ -117,7 +117,7 @@ spec:
 
 If Bacon is not getting fed (releasable memory is not used) this memory limit is enough.
 
-<img src="graphs/3.1.png" width="800"/>
+<img src="graphs/3-1.png" width="800"/>
 
 ```yaml
 apiVersion: v1
