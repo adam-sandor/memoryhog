@@ -18,6 +18,8 @@ You don't need to build the Docker container (it's up on [Dockerhub here](https:
 the Dockerfile to familiarise yourself how it's built. Especially the experimental memory settings that
 are applied to the container:
 
+| Setting | Description |
+| --- | --- |
 | -XX:+UnlockExperimentalVMOptions | Unlock the settings we need to enable the settings backported from Java9 |
 | -XX:+UseCGroupMemoryLimitForHeap | Detect heap size from Docker container memory limit |
 | -XshowSettings:vm | Print the detected memory settings on startup |
@@ -34,6 +36,8 @@ enabled/disabled separately. Both can be enabled at the same time to combine the
 Pinky will consume memory at a given rate until reaching a set amount of memory. It stores the memory in a list so
 the GC cannot reclaim it. After reaching the set amount it will wait for a period of time and release the memory afterwards.
 
+| Setting | Description |
+| --- | --- |
 | FEED_PINKY | true/false |
 | PINKY_CONSUME_MB | How much memory should Pinky eat |
 | PINKY_RELEASE_AFTER_SEC | How long should Pinky hold on to the memory |
@@ -43,6 +47,8 @@ the GC cannot reclaim it. After reaching the set amount it will wait for a perio
 
 Bacon will consume memory and immediately release it to produce the familiar Java saw-line.
 
+| Setting | Description |
+| --- | --- |
 | FEED_BACON | true/false |
 | BACON_CONSUME_UNTIL_MINUTES | How long should Bacon keep feeding |
 | BACON_CONSUME_RATE_MB_PER_SECOND | How much memory should Bacon reserve then release each second |
